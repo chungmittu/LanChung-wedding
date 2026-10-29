@@ -129,7 +129,7 @@ a {
   background-position: center;
   background-size: cover;
   padding: max(1.2rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1.2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
-  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s ease, transform 0.85s ease;
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
   overflow-y: auto;
   overflow-x: hidden;
   isolation: isolate;
@@ -139,7 +139,6 @@ a {
 .cover.open {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.05);
   pointer-events: none;
 }
 
@@ -148,7 +147,7 @@ a {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1050;
+  z-index: 1;
 }
 
 /* Khung chứa nội dung trung tâm của trang bìa (Bố cục dọc chuẩn tỉ lệ vàng trên mobile) */
@@ -164,6 +163,20 @@ a {
   gap: clamp(1rem, 2.6vh, 1.8rem);
   text-align: center;
   z-index: 5;
+}
+
+.cover-logo {
+  display: block;
+  width: clamp(76px, 22vw, 104px);
+  flex: 0 0 auto;
+  margin-bottom: -0.5rem;
+}
+
+.cover-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* Tiêu đề trang trọng bên trên phong bì */
@@ -221,7 +234,10 @@ a {
 /* Thẻ cá nhân hoá người nhận thiệp */
 .cover-guest-badge {
   margin-top: 0.4rem;
+  max-width: min(100%, 380px);
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 0.45rem;
   padding: 0.4rem 1.15rem;
@@ -241,10 +257,11 @@ a {
 }
 
 .cover-guest-name {
-  font-family: var(--serif);
-  font-size: 1.08rem;
+  font-family: 'Great Vibes', var(--serif);
+  font-size: clamp(1.35rem, 5vw, 1.65rem);
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 400;
+  line-height: 1.1;
 }
 
 /* Vùng hiển thị phong bì hoàng gia có hiệu ứng 3D Parallax Tilt */
@@ -292,7 +309,7 @@ a {
   z-index: 2;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(212, 168, 83, 0.4);
-  transition: transform 0.95s cubic-bezier(0.2, 0.85, 0.2, 1), box-shadow 0.95s ease;
+  transition: transform 0.75s cubic-bezier(0.2, 0.85, 0.2, 1), box-shadow 0.75s ease;
 }
 
 .envelope-card-border {
@@ -481,13 +498,7 @@ a {
   display: grid;
   place-items: center;
   filter: drop-shadow(0 8px 22px rgba(100, 20, 18, 0.45));
-  animation: waxBreathe 3s ease-in-out infinite;
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-@keyframes waxBreathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.035); }
 }
 
 .wax-seal:hover .wax-seal-wrapper,
@@ -504,24 +515,6 @@ a {
   height: 100%;
   display: block;
   overflow: visible;
-}
-
-/* Vệt sáng kim loại lướt qua con dấu */
-.wax-shine {
-  position: absolute;
-  inset: 4px;
-  border-radius: 50%;
-  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.4) 45%, rgba(255, 240, 200, 0.6) 50%, rgba(255, 255, 255, 0.4) 55%, transparent 80%);
-  opacity: 0;
-  pointer-events: none;
-  animation: waxShimmer 3.2s ease-in-out infinite;
-}
-
-@keyframes waxShimmer {
-  0% { transform: translateX(-100%) rotate(25deg); opacity: 0; }
-  20% { opacity: 0.8; }
-  40% { transform: translateX(100%) rotate(25deg); opacity: 0; }
-  100% { transform: translateX(100%) rotate(25deg); opacity: 0; }
 }
 
 /* Lời mời chạm mở thiệp dạng pill hoàng gia */
@@ -541,7 +534,6 @@ a {
   box-shadow: 0 4px 16px rgba(212, 168, 83, 0.25);
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-  animation: ctaFloat 2.4s ease-in-out infinite;
   user-select: none;
 }
 
@@ -558,17 +550,6 @@ a {
 .cover-cta-sparkle {
   color: #d4a853;
   font-size: 0.75rem;
-  animation: starTwinkle 1.8s ease-in-out infinite alternate;
-}
-
-@keyframes ctaFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-@keyframes starTwinkle {
-  0% { opacity: 0.4; transform: scale(0.85); }
-  100% { opacity: 1; transform: scale(1.15); }
 }
 
 /* ==========================================
@@ -596,9 +577,9 @@ a {
 }
 
 .envelope-scene.is-open .envelope-card {
-  transform: translateY(-58%) scale(1.04);
+  transform: translateY(-12%) scale(1.01);
   z-index: 6;
-  box-shadow: 0 25px 60px rgba(41, 39, 35, 0.3), 0 0 35px rgba(247, 213, 155, 0.45);
+  box-shadow: 0 14px 32px rgba(41, 39, 35, 0.2), 0 0 18px rgba(247, 213, 155, 0.3);
 }
 
 
@@ -850,36 +831,94 @@ nav a:hover {
   background: var(--cream);
 }
 
-.photos {
-  columns: 3;
-  column-gap: 1rem;
+.gallery-slider {
   margin-top: 3rem;
 }
 
+.photos {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  overflow-x: auto;
+  padding: 0.75rem max(0.75rem, calc((100% - 780px) / 2)) 1.25rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.photos::-webkit-scrollbar {
+  display: none;
+}
+
 .photo {
-  display: inline-block;
-  width: 100%;
+  display: block;
+  flex: 0 0 min(78vw, 780px);
+  width: min(78vw, 780px);
   border: 0;
   padding: 0;
-  margin: 0 0 1rem;
   overflow: hidden;
   background: #eee;
   min-width: 0;
-  break-inside: avoid;
   cursor: pointer;
   border-radius: 4px;
+  scroll-snap-align: center;
+  box-shadow: 0 10px 28px rgba(41, 39, 35, 0.12);
 }
 
 .photo img {
   width: 100%;
-  height: auto;
+  height: clamp(240px, 52vw, 520px);
   display: block;
   object-fit: cover;
-  transition: transform 0.4s ease, filter 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
 }
 
 .photo:hover img {
-  transform: scale(1.02);
+  transform: scale(1.035);
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.gallery-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(41, 39, 35, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-arrow:hover {
+  background: #fff;
+  transform: scale(1.06);
+}
+
+.gallery-arrow:active {
+  transform: scale(0.94);
+}
+
+.gallery-counter {
+  min-width: 3.5rem;
+  color: #76695d;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  text-align: center;
 }
 
 
@@ -2149,8 +2188,6 @@ footer {
   .gift { grid-template-columns: 1fr; }
   .gift-grid { max-width: 760px; }
   .story { gap: 3rem; }
-  .photos { columns: 2; }
-
   #wishes .wish-layout {
     grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
     gap: 2rem;
@@ -2300,7 +2337,9 @@ footer {
   .date { justify-content: center; gap: 0.6rem; }
   .section { padding: 4.5rem 1.1rem; }
   .heading h2, .family h2 { font-size: clamp(2.8rem, 16vw, 4.2rem); }
-  .photos { columns: 1; column-gap: 0; }
+  .photo { flex-basis: 84vw; width: 84vw; }
+  .photo img { height: clamp(260px, 68vw, 420px); }
+  .gallery-slider { margin-top: 2rem; }
 
   .count { padding-inline: 0.55rem; }
   .count h2 { font-size: 2.4rem; }
@@ -2371,6 +2410,15 @@ footer {
     animation: none;
   }
   .wish-slider-controls button {
+    transition: none;
+  }
+  .photos {
+    scroll-behavior: auto;
+  }
+  .photo img {
+    transition: none;
+  }
+  .gallery-arrow {
     transition: none;
   }
   .petals-canvas {

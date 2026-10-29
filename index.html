@@ -27,7 +27,7 @@
 
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@300;400;500;600&display=swap&subset=vietnamese" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Manrope:wght@300;400;500;600&display=swap&subset=vietnamese" rel="stylesheet"/>
   <link href="style.css" rel="stylesheet"/>
   
   <script defer="" src="config.js"></script>
@@ -40,15 +40,21 @@
 
   <!-- Canvas hiệu ứng cánh hoa rơi lãng mạn -->
   <canvas class="petals-canvas" id="petalsCanvas"></canvas>
-  <!-- Canvas hiệu ứng bùng nổ bụi vàng & hoa khi mở thiệp -->
-  <canvas class="burst-canvas" id="burstCanvas"></canvas>
-
   <!-- Trang bìa mở thiệp: Phong bì hoàng gia & Con dấu sáp L & C -->
   <div class="cover" id="cover">
+    <!-- Canvas hiệu ứng mở thiệp nằm dưới nội dung để không che chữ -->
+    <canvas class="burst-canvas" id="burstCanvas"></canvas>
+
     <!-- Hạt bụi vàng lấp lánh nền -->
     <div class="cover-sparkles"></div>
 
     <div class="cover-content">
+      <picture class="cover-logo">
+        <source media="(min-width: 1024px)" srcset="assets/images/logo_liu_chiu_desktop.webp"/>
+        <source media="(min-width: 768px)" srcset="assets/images/logo_liu_chiu_tablet.webp"/>
+        <img alt="Logo Liu Chiu" src="assets/images/logo_liu_chiu_mobile.webp"/>
+      </picture>
+
       <!-- Khung tiêu đề trang trọng mở đầu -->
       <header class="cover-intro">
         <span class="cover-eyebrow">The Wedding Invitation</span>
@@ -157,7 +163,6 @@
                   <circle cx="50" cy="63" r="1.5" fill="url(#goldEmbroidery)"/>
                 </g>
               </svg>
-              <div class="wax-shine"></div>
             </div>
           </button>
         </div>
@@ -255,34 +260,41 @@
         <span class="eyebrow">Selected moments</span>
         <h2>Wedding <em>Gallery</em></h2>
       </div>
-      <div class="photos">
-        <button class="photo reveal" data-img="assets/images/CD-CR.png">
-          <img alt="Lan và Chung trong bộ ảnh cưới giữa khu vườn hoa trắng" loading="lazy" src="assets/images/CD-CR.png"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/Bride-with-Lace-Train.png">
-          <img alt="Cô dâu trong chiếc váy cưới ren với đuôi váy dài" loading="lazy" src="assets/images/Bride-with-Lace-Train.png"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/CR.png">
-          <img alt="Cô dâu thử chiếc váy cưới ren bồng bềnh" loading="lazy" src="assets/images/CR.png"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/26.jpg">
-          <img alt="Lan và Chung khoe nhẫn đính hôn bên thác nước" loading="lazy" src="assets/images/26.jpg"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/24.jpg">
-          <img alt="Lan và Chung chụp ảnh bên thác nước" loading="lazy" src="assets/images/24.jpg"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/18.jpg">
-          <img alt="Khoảnh khắc tình cảm của Lan và Chung trong chuyến đi" loading="lazy" src="assets/images/18.jpg"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/21.jpg">
-          <img alt="Lan và Chung bên dòng thác giữa thiên nhiên" loading="lazy" src="assets/images/21.jpg"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/22.jpg">
-          <img alt="Một khoảnh khắc vui vẻ trong chuyến đi của Lan và Chung" loading="lazy" src="assets/images/22.jpg"/>
-        </button>
-        <button class="photo reveal" data-img="assets/images/23.jpg">
-          <img alt="Lan và Chung cùng ngắm cảnh trong chuyến đi" loading="lazy" src="assets/images/23.jpg"/>
-        </button>
+      <div aria-label="Album ảnh cưới" aria-roledescription="carousel" class="gallery-slider" id="gallerySlider" role="region">
+        <div class="photos" id="galleryTrack" tabindex="0">
+          <button class="photo" data-img="assets/images/CD-CR.png" aria-roledescription="slide">
+            <img alt="Lan và Chung trong bộ ảnh cưới giữa khu vườn hoa trắng" loading="lazy" src="assets/images/CD-CR.png"/>
+          </button>
+          <button class="photo" data-img="assets/images/Bride-with-Lace-Train.png" aria-roledescription="slide">
+            <img alt="Cô dâu trong chiếc váy cưới ren với đuôi váy dài" loading="lazy" src="assets/images/Bride-with-Lace-Train.png"/>
+          </button>
+          <button class="photo" data-img="assets/images/CR.png" aria-roledescription="slide">
+            <img alt="Cô dâu thử chiếc váy cưới ren bồng bềnh" loading="lazy" src="assets/images/CR.png"/>
+          </button>
+          <button class="photo" data-img="assets/images/26.jpg" aria-roledescription="slide">
+            <img alt="Lan và Chung khoe nhẫn đính hôn bên thác nước" loading="lazy" src="assets/images/26.jpg"/>
+          </button>
+          <button class="photo" data-img="assets/images/24.jpg" aria-roledescription="slide">
+            <img alt="Lan và Chung chụp ảnh bên thác nước" loading="lazy" src="assets/images/24.jpg"/>
+          </button>
+          <button class="photo" data-img="assets/images/18.jpg" aria-roledescription="slide">
+            <img alt="Khoảnh khắc tình cảm của Lan và Chung trong chuyến đi" loading="lazy" src="assets/images/18.jpg"/>
+          </button>
+          <button class="photo" data-img="assets/images/21.jpg" aria-roledescription="slide">
+            <img alt="Lan và Chung bên dòng thác giữa thiên nhiên" loading="lazy" src="assets/images/21.jpg"/>
+          </button>
+          <button class="photo" data-img="assets/images/22.jpg" aria-roledescription="slide">
+            <img alt="Một khoảnh khắc vui vẻ trong chuyến đi của Lan và Chung" loading="lazy" src="assets/images/22.jpg"/>
+          </button>
+          <button class="photo" data-img="assets/images/23.jpg" aria-roledescription="slide">
+            <img alt="Lan và Chung cùng ngắm cảnh trong chuyến đi" loading="lazy" src="assets/images/23.jpg"/>
+          </button>
+        </div>
+        <div class="gallery-controls">
+          <button aria-label="Ảnh trước trong album" class="gallery-arrow" id="galleryPrev" type="button">‹</button>
+          <span aria-live="polite" class="gallery-counter" id="galleryCounter">1 / 9</span>
+          <button aria-label="Ảnh tiếp theo trong album" class="gallery-arrow" id="galleryNext" type="button">›</button>
+        </div>
       </div>
     </section>
 

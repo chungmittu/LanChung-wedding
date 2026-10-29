@@ -57,6 +57,7 @@ const envelopeScene = $('#envelopeScene');
 
 // Hiệu ứng pháo hoa bụi vàng & cánh hoa bùng nổ khi mở thiệp
 function triggerOpeningBurst(originEl) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const canvas = document.getElementById('burstCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -68,7 +69,7 @@ function triggerOpeningBurst(originEl) {
   const originY = rect.top + rect.height / 2;
 
   const particles = [];
-  const count = window.innerWidth <= 768 ? 55 : 85;
+  const count = window.innerWidth <= 768 ? 18 : 28;
   const colors = [
     '#f7d59b', '#e6bf70', '#d4a853', // Vàng gold
     '#e29590', '#c87670', '#f4c3be', // Cánh hoa hồng
@@ -77,17 +78,17 @@ function triggerOpeningBurst(originEl) {
 
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = 4 + Math.random() * 9;
+    const speed = 2.5 + Math.random() * 4;
     particles.push({
       x: originX,
       y: originY,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed - 1.5,
-      size: 4 + Math.random() * 7,
+      size: 2 + Math.random() * 3,
       color: colors[Math.floor(Math.random() * colors.length)],
       alpha: 1,
-      decay: 0.012 + Math.random() * 0.015,
-      gravity: 0.22,
+      decay: 0.025 + Math.random() * 0.015,
+      gravity: 0.12,
       rotation: Math.random() * Math.PI * 2,
       rotationSpeed: (Math.random() - 0.5) * 0.15,
       isFlowerPetal: Math.random() > 0.5
@@ -149,7 +150,7 @@ if (envelopeScene && coverElem && !window.matchMedia('(prefers-reduced-motion: r
     const rect = coverElem.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    envelopeScene.style.transform = `perspective(1200px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-2px)`;
+    envelopeScene.style.transform = `perspective(1200px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
   });
 
   coverElem.addEventListener('mouseleave', () => {
@@ -179,15 +180,16 @@ function openEnvelopeInvitation() {
   // 3. Bắt đầu phát nhạc nền
   startBackgroundMusic();
 
-  // 4. Sau 1.35s cho khách thưởng thức khoảnh khắc mở thư, chuyển vào trang web chính
+  // 4. Chờ nắp mở xong rồi chuyển nhẹ sang nội dung chính
+  const openingDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 900;
   setTimeout(() => {
     coverElem.classList.add('open');
     document.body.classList.remove('locked');
 
     setTimeout(() => {
       coverElem.remove();
-    }, 900);
-  }, 1350);
+    }, 700);
+  }, openingDelay);
 }
 
 if (openBtn) openBtn.onclick = openEnvelopeInvitation;
@@ -442,6 +444,108 @@ function closeLightbox() {
 $$('.photo').forEach((button, index) => {
   button.onclick = () => openLightbox(index, button);
 });
+
+const gallerySlider = $('#gallerySlider');
+const galleryTrack = $('#galleryTrack');
+const galleryCounter = $('#galleryCounter');
+const gallerySlides = $$('.photo');
+const galleryReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let galleryAutoSlideTimeout = null;
+let galleryScrollTimeout = null;
+
+function getGalleryActiveIndex() {
+  if (!galleryTrack || photos.length === 0) return 0;
+  const trackCenter = galleryTrack.getBoundingClientRect().left + galleryTrack.clientWidth / 2;
+  return gallerySlides.reduce((closestIndex, slide, index) => {
+    const currentDistance = Math.abs(slide.getBoundingClientRect().left + slide.offsetWidth / 2 - trackCenter);
+    const closestSlide = gallerySlides[closestIndex];
+    const closestDistance = Math.abs(closestSlide.getBoundingClientRect().left + closestSlide.offsetWidth / 2 - trackCenter);
+    return currentDistance < closestDistance ? index : closestIndex;
+  }, 0);
+}
+
+function updateGalleryCounter() {
+  if (!galleryCounter || photos.length === 0) return;
+  const activeIndex = getGalleryActiveIndex();
+  galleryCounter.textContent = `${activeIndex + 1} / ${photos.length}`;
+  gallerySlides.forEach((slide, index) => {
+    slide.setAttribute('aria-label', `Ảnh ${index + 1} trên ${photos.length}: ${photos[index].alt}`);
+  });
+}
+
+function goToGallerySlide(index) {
+  if (!galleryTrack || gallerySlides.length === 0) return;
+  const slides = gallerySlides;
+  const normalizedIndex = (index + slides.length) % slides.length;
+  const slide = slides[normalizedIndex];
+  const left = slide.offsetLeft - (galleryTrack.clientWidth - slide.clientWidth) / 2;
+  galleryTrack.scrollTo({
+    left,
+    behavior: galleryReducedMotion.matches ? 'auto' : 'smooth'
+  });
+  updateGalleryCounter();
+}
+
+function stopGalleryAutoplay() {
+  clearTimeout(galleryAutoSlideTimeout);
+  galleryAutoSlideTimeout = null;
+}
+
+function scheduleGalleryAutoplay() {
+  stopGalleryAutoplay();
+  if (
+    !gallerySlider ||
+    galleryReducedMotion.matches ||
+    document.hidden ||
+    gallerySlider.matches(':hover') ||
+    gallerySlider.contains(document.activeElement) ||
+    photos.length < 2
+  ) return;
+
+  galleryAutoSlideTimeout = setTimeout(() => {
+    goToGallerySlide(getGalleryActiveIndex() + 1);
+    scheduleGalleryAutoplay();
+  }, 5500);
+}
+
+if (gallerySlider && galleryTrack) {
+  gallerySlides.forEach((slide, index) => {
+    slide.setAttribute('aria-label', `Ảnh ${index + 1} trên ${gallerySlides.length}: ${photos[index].alt}`);
+  });
+
+  $('#galleryPrev')?.addEventListener('click', () => {
+    goToGallerySlide(getGalleryActiveIndex() - 1);
+    scheduleGalleryAutoplay();
+  });
+  $('#galleryNext')?.addEventListener('click', () => {
+    goToGallerySlide(getGalleryActiveIndex() + 1);
+    scheduleGalleryAutoplay();
+  });
+
+  galleryTrack.addEventListener('scroll', () => {
+    stopGalleryAutoplay();
+    clearTimeout(galleryScrollTimeout);
+    galleryScrollTimeout = setTimeout(() => {
+      updateGalleryCounter();
+      scheduleGalleryAutoplay();
+    }, 120);
+  }, { passive: true });
+
+  gallerySlider.addEventListener('mouseenter', stopGalleryAutoplay);
+  gallerySlider.addEventListener('mouseleave', scheduleGalleryAutoplay);
+  gallerySlider.addEventListener('focusin', stopGalleryAutoplay);
+  gallerySlider.addEventListener('focusout', event => {
+    if (!gallerySlider.contains(event.relatedTarget)) scheduleGalleryAutoplay();
+  });
+  gallerySlider.addEventListener('pointerdown', stopGalleryAutoplay);
+  gallerySlider.addEventListener('pointerup', scheduleGalleryAutoplay);
+  galleryReducedMotion.addEventListener('change', scheduleGalleryAutoplay);
+  document.addEventListener('visibilitychange', scheduleGalleryAutoplay);
+  window.addEventListener('resize', updateGalleryCounter);
+
+  updateGalleryCounter();
+  scheduleGalleryAutoplay();
+}
 
 // Nút Đóng & Nút Next / Prev
 $('#close')?.addEventListener('click', closeLightbox);
