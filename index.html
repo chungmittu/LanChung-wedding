@@ -8,14 +8,14 @@
   <meta content="Thiệp cưới Lan và Chung, ngày 12 tháng 12 năm 2026" name="description"/>
   <title>Lan & Chung | 12.12.2026</title>
   <!-- Replace the placeholder domain in these URLs with the deployed HTTPS website URL. -->
-  <link href="https://lan-chung-wedding.netlify.app/" rel="canonical"/>
+  <link href="https://chungmittu.github.io/lan-chung-wedding-main/" rel="canonical"/>
   <meta content="website" property="og:type"/>
   <meta content="vi_VN" property="og:locale"/>
   <meta content="Lan &amp; Chung" property="og:site_name"/>
   <meta content="Lan &amp; Chung | 12.12.2026" property="og:title"/>
   <meta content="Lan và Chung trân trọng mời bạn cùng hiện diện trong ngày khởi đầu hành trình mới — 12.12.2026." property="og:description"/>
-  <meta content="https://lan-chung-wedding.netlify.app/" property="og:url"/>
-  <meta content="https://lan-chung-wedding.netlify.app/assets/images/hero.webp" property="og:image"/>
+  <meta content="https://chungmittu.github.io/lan-chung-wedding-main/" property="og:url"/>
+  <meta content="https://chungmittu.github.io/lan-chung-wedding-main/assets/images/hero.webp" property="og:image"/>
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="Lan và Chung trong ngày cưới" property="og:image:alt"/>
@@ -23,7 +23,7 @@
   <meta content="summary_large_image" name="twitter:card"/>
   <meta content="Lan &amp; Chung | 12.12.2026" name="twitter:title"/>
   <meta content="Lan và Chung trân trọng mời bạn cùng hiện diện trong ngày khởi đầu hành trình mới — 12.12.2026." name="twitter:description"/>
-  <meta content="https://lan-chung-wedding.netlify.app/assets/images/hero.webp" name="twitter:image"/>
+  <meta content="https://chungmittu.github.io/lan-chung-wedding-main/assets/images/hero.webp" name="twitter:image"/>
 
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -48,104 +48,126 @@
     <!-- Hạt bụi vàng lấp lánh nền -->
     <div class="cover-sparkles"></div>
 
-    <div class="envelope-scene" id="envelopeScene">
-      <div class="envelope" id="envelope">
-        <!-- Nắp phong bì mở ngược lên kèm lớp lót hoa lá sang trọng -->
-        <div class="envelope-flap-top" id="envelopeFlapTop">
-          <div class="envelope-liner"></div>
+    <div class="cover-content">
+      <!-- Khung tiêu đề trang trọng mở đầu -->
+      <header class="cover-intro">
+        <span class="cover-eyebrow">The Wedding Invitation</span>
+        <h1 class="cover-title">Lan <i>&amp;</i> Chung</h1>
+        <p class="cover-date">12 · 12 · 2026</p>
+
+        <!-- Thẻ cá nhân hoá khách mời (?to=...) -->
+        <div class="cover-guest-badge" id="guestCardBadge" hidden>
+          <span class="cover-guest-prefix">Trân trọng kính mời</span>
+          <strong class="cover-guest-name" id="guestCoverName"></strong>
         </div>
-        
-        <!-- Lá thiệp mời sang trọng bên trong phong bì -->
-        <div class="envelope-card" id="envelopeCard">
-          <div class="envelope-card-border"></div>
-          <div class="guest-card-badge" id="guestCardBadge" hidden>
-            <span class="guest-card-prefix">Trân trọng kính mời</span>
-            <strong class="guest-card-name" id="guestCoverName"></strong>
+      </header>
+
+      <!-- Khung hiển thị chiếc phong bì hoàng gia 3D -->
+      <div class="envelope-scene" id="envelopeScene">
+        <div class="envelope" id="envelope">
+          <!-- Lá thiệp mời sang trọng bên trong lòng phong bì -->
+          <div class="envelope-card" id="envelopeCard">
+            <div class="envelope-card-border"></div>
+            <span class="envelope-card-eyebrow">Wedding Invitation</span>
+            <picture>
+              <source media="(min-width: 1024px)" srcset="assets/images/logo_liu_chiu_desktop.webp"/>
+              <source media="(min-width: 768px)" srcset="assets/images/logo_liu_chiu_tablet.webp"/>
+              <img alt="Logo Liu Chiu" src="assets/images/logo_liu_chiu_mobile.webp"/>
+            </picture>
+            <h2 class="envelope-card-names">Lan <i>&amp;</i> Chung</h2>
+            <p class="envelope-card-date">Thứ Bảy · 12.12.2026</p>
           </div>
-          <span class="eyebrow">Wedding invitation</span>
-          <picture>
-            <source media="(min-width: 1024px)" srcset="assets/images/logo_liu_chiu_desktop.webp"/>
-            <source media="(min-width: 768px)" srcset="assets/images/logo_liu_chiu_tablet.webp"/>
-            <img alt="Logo Liu Chiu" src="assets/images/logo_liu_chiu_mobile.webp"/>
-          </picture>
-          <h1>Lan <i>&</i> Chung</h1>
-          <p class="envelope-date">12 · 12 · 2026</p>
-        </div>
 
-        <!-- Thân phong bì trước với viền chỉ vàng -->
-        <div class="envelope-pocket">
-          <div class="envelope-pocket-gold-border"></div>
-        </div>
-
-        <!-- Dải ruy băng lụa chạy ngang phong bì -->
-        <div class="envelope-ribbon">
-          <div class="envelope-ribbon-tag">
-            <span>INVITATION</span>
-            <b>LAN &amp; CHUNG</b>
+          <!-- Thân phong bì (Pocket) -->
+          <div class="envelope-pocket">
+            <div class="envelope-pocket-bg"></div>
+            <div class="envelope-pocket-crease-left"></div>
+            <div class="envelope-pocket-crease-right"></div>
+            <div class="envelope-pocket-front"></div>
           </div>
-        </div>
 
-        <!-- Nắp phong bì tam giác gập xuống có viền vàng kim -->
-        <div class="envelope-flap" id="envelopeFlap">
-          <div class="envelope-flap-gold-edge"></div>
-        </div>
+          <!-- Dải ruy băng lụa chạy ngang phong bì -->
+          <div class="envelope-ribbon"></div>
 
-        <!-- Con dấu sáp hoàng gia dập nổi chữ L & C và vòng nguyệt quế vàng -->
-        <button aria-label="Chạm để mở thiệp cưới" class="wax-seal" id="open" type="button">
-          <div class="wax-seal-wrapper">
-            <svg class="wax-seal-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Nắp phong bì mở ngược lên khi unboxing -->
+          <div class="envelope-flap-top" id="envelopeFlapTop">
+            <div class="envelope-liner"></div>
+          </div>
+
+          <!-- Nắp phong bì tam giác gập xuống -->
+          <div class="envelope-flap" id="envelopeFlap">
+            <svg class="envelope-flap-svg" viewBox="0 0 400 215" preserveAspectRatio="none">
               <defs>
-                <radialGradient id="waxGrad" cx="36%" cy="32%" r="68%">
-                  <stop offset="0%" stop-color="#cf3b37"/>
-                  <stop offset="42%" stop-color="#a32422"/>
-                  <stop offset="82%" stop-color="#731412"/>
-                  <stop offset="100%" stop-color="#4d0b09"/>
-                </radialGradient>
-                <linearGradient id="goldEmbroidery" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#fff2be"/>
-                  <stop offset="35%" stop-color="#e8c372"/>
-                  <stop offset="70%" stop-color="#bf933d"/>
-                  <stop offset="100%" stop-color="#ffe299"/>
+                <linearGradient id="flapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#fffdfa" />
+                  <stop offset="65%" stop-color="#f7eee3" />
+                  <stop offset="100%" stop-color="#ecded0" />
                 </linearGradient>
-                <filter id="waxShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#450806" flood-opacity="0.6"/>
-                  <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.35"/>
-                </filter>
-                <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="1" stdDeviation="0.4" flood-color="#000" flood-opacity="0.7"/>
-                </filter>
               </defs>
-              <!-- Hình dáng mép sáp nóng chảy tự nhiên dập nổi -->
-              <path d="M50 3.5 C68 2.5 85 11 92 27 C98 41 95 61 88 75 C80 90 62 96.5 45 95.5 C28 94.5 11 85.5 5 69.5 C-2 53.5 2 33.5 12 19.5 C22 6.5 36 3.5 50 3.5 Z" fill="url(#waxGrad)" filter="url(#waxShadow)"/>
-              <!-- Gờ viền tròn dập chìm -->
-              <circle cx="50" cy="49" r="35" stroke="rgba(0,0,0,0.35)" stroke-width="1.5" fill="none"/>
-              <circle cx="50" cy="49" r="33" stroke="url(#goldEmbroidery)" stroke-width="1.2" stroke-dasharray="2.5 1.5" fill="none" opacity="0.85"/>
-              <!-- Vòng nguyệt quế hoàng gia mạ vàng -->
-              <g stroke="url(#goldEmbroidery)" stroke-width="1" fill="none" opacity="0.8" filter="url(#emboss)">
-                <path d="M28 63 C22 51 24 37 34 27 C36 25 39 23 43 22"/>
-                <path d="M72 63 C78 51 76 37 66 27 C64 25 61 23 57 22"/>
-                <path d="M26 56 C22 54 22 48 25 46 C28 45 30 50 26 56" fill="url(#goldEmbroidery)"/>
-                <path d="M25 44 C21 42 22 36 25 34 C28 34 29 39 25 44" fill="url(#goldEmbroidery)"/>
-                <path d="M28 33 C25 30 27 25 31 24 C34 25 34 30 28 33" fill="url(#goldEmbroidery)"/>
-                <path d="M74 56 C78 54 78 48 75 46 C72 45 70 50 74 56" fill="url(#goldEmbroidery)"/>
-                <path d="M75 44 C79 42 78 36 75 34 C72 34 71 39 75 44" fill="url(#goldEmbroidery)"/>
-                <path d="M72 33 C75 30 73 25 69 24 C66 25 66 30 72 33" fill="url(#goldEmbroidery)"/>
-              </g>
-              <!-- Chữ lồng thư pháp nghệ thuật L & C -->
-              <g filter="url(#emboss)">
-                <text x="50" y="54" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="600" fill="url(#goldEmbroidery)" text-anchor="middle" letter-spacing="1">L&amp;C</text>
-                <circle cx="50" cy="63" r="1.5" fill="url(#goldEmbroidery)"/>
-              </g>
+              <polygon points="0,0 400,0 200,210" fill="url(#flapGrad)" />
+              <polygon points="0,0 400,0 200,210" stroke="rgba(212, 168, 83, 0.45)" stroke-width="1.5" fill="none" />
+              <polyline points="18,5 200,196 382,5" stroke="rgba(212, 168, 83, 0.35)" stroke-dasharray="3 3" stroke-width="1" fill="none" />
             </svg>
-            <div class="wax-shine"></div>
           </div>
-          <!-- Lời mời chạm mở thiệp thanh lịch mạ vàng -->
-          <div class="wax-hint-wrap">
-            <span class="wax-hint-star">✦</span>
-            <span class="wax-hint-text">Chạm để mở thiệp</span>
-            <span class="wax-hint-star">✦</span>
-          </div>
-        </button>
+
+          <!-- Con dấu sáp hoàng gia dập nổi chữ L & C và vòng nguyệt quế vàng -->
+          <button aria-label="Chạm để mở thiệp cưới" class="wax-seal" id="open" type="button">
+            <div class="wax-seal-wrapper">
+              <svg class="wax-seal-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="waxGrad" cx="36%" cy="32%" r="68%">
+                    <stop offset="0%" stop-color="#cf3b37"/>
+                    <stop offset="42%" stop-color="#a32422"/>
+                    <stop offset="82%" stop-color="#731412"/>
+                    <stop offset="100%" stop-color="#4d0b09"/>
+                  </radialGradient>
+                  <linearGradient id="goldEmbroidery" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff2be"/>
+                    <stop offset="35%" stop-color="#e8c372"/>
+                    <stop offset="70%" stop-color="#bf933d"/>
+                    <stop offset="100%" stop-color="#ffe299"/>
+                  </linearGradient>
+                  <filter id="waxShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#450806" flood-opacity="0.55"/>
+                    <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+                  </filter>
+                  <filter id="emboss" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="0.4" flood-color="#000" flood-opacity="0.7"/>
+                  </filter>
+                </defs>
+                <!-- Hình dáng mép sáp nóng chảy tự nhiên dập nổi -->
+                <path d="M50 3.5 C68 2.5 85 11 92 27 C98 41 95 61 88 75 C80 90 62 96.5 45 95.5 C28 94.5 11 85.5 5 69.5 C-2 53.5 2 33.5 12 19.5 C22 6.5 36 3.5 50 3.5 Z" fill="url(#waxGrad)" filter="url(#waxShadow)"/>
+                <!-- Gờ viền tròn dập chìm -->
+                <circle cx="50" cy="49" r="35" stroke="rgba(0,0,0,0.35)" stroke-width="1.5" fill="none"/>
+                <circle cx="50" cy="49" r="33" stroke="url(#goldEmbroidery)" stroke-width="1.2" stroke-dasharray="2.5 1.5" fill="none" opacity="0.85"/>
+                <!-- Vòng nguyệt quế hoàng gia mạ vàng -->
+                <g stroke="url(#goldEmbroidery)" stroke-width="1" fill="none" opacity="0.8" filter="url(#emboss)">
+                  <path d="M28 63 C22 51 24 37 34 27 C36 25 39 23 43 22"/>
+                  <path d="M72 63 C78 51 76 37 66 27 C64 25 61 23 57 22"/>
+                  <path d="M26 56 C22 54 22 48 25 46 C28 45 30 50 26 56" fill="url(#goldEmbroidery)"/>
+                  <path d="M25 44 C21 42 22 36 25 34 C28 34 29 39 25 44" fill="url(#goldEmbroidery)"/>
+                  <path d="M28 33 C25 30 27 25 31 24 C34 25 34 30 28 33" fill="url(#goldEmbroidery)"/>
+                  <path d="M74 56 C78 54 78 48 75 46 C72 45 70 50 74 56" fill="url(#goldEmbroidery)"/>
+                  <path d="M75 44 C79 42 78 36 75 34 C72 34 71 39 75 44" fill="url(#goldEmbroidery)"/>
+                  <path d="M72 33 C75 30 73 25 69 24 C66 25 66 30 72 33" fill="url(#goldEmbroidery)"/>
+                </g>
+                <!-- Chữ lồng thư pháp nghệ thuật L & C -->
+                <g filter="url(#emboss)">
+                  <text x="50" y="54" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="600" fill="url(#goldEmbroidery)" text-anchor="middle" letter-spacing="1">L&amp;C</text>
+                  <circle cx="50" cy="63" r="1.5" fill="url(#goldEmbroidery)"/>
+                </g>
+              </svg>
+              <div class="wax-shine"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Lời mời chạm mở thiệp dạng pill hoàng gia bên dưới -->
+      <div class="cover-cta" id="coverCta" role="button" tabindex="0" aria-label="Chạm để mở thiệp">
+        <span class="cover-cta-sparkle">✦</span>
+        <span class="cover-cta-text">Chạm để mở thiệp</span>
+        <span class="cover-cta-sparkle">✦</span>
       </div>
     </div>
   </div>

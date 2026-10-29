@@ -118,18 +118,20 @@ a {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #f7efe6;
   background-image:
-    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.75) 0%, rgba(246, 239, 232, 0.95) 70%, #ebdccf 100%),
+    radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.88) 0%, rgba(246, 239, 232, 0.96) 65%, #edd9c8 100%),
     url("assets/images/cover-floral.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover, cover;
-  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background-size: cover;
+  padding: max(1.2rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1.2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s ease, transform 0.85s ease;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   isolation: isolate;
   perspective: 1400px;
 }
@@ -149,153 +151,264 @@ a {
   z-index: 1050;
 }
 
-/* Vùng hiển thị chiếc phong bì có hiệu ứng 3D Parallax */
-.envelope-scene {
+/* Khung chứa nội dung trung tâm của trang bìa (Bố cục dọc chuẩn tỉ lệ vàng trên mobile) */
+.cover-content {
   position: relative;
-  width: min(92vw, 480px);
-  height: min(72svh, 500px);
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 0.35s ease-out;
-  transform-style: preserve-3d;
+  gap: clamp(1rem, 2.6vh, 1.8rem);
+  text-align: center;
+  z-index: 5;
 }
 
-/* Thân phong bì giấy mỹ thuật cao cấp */
+/* Tiêu đề trang trọng bên trên phong bì */
+.cover-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  animation: coverIntroFade 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes coverIntroFade {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.cover-eyebrow {
+  font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  color: #8c7c6e;
+  font-weight: 600;
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 8vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.05;
+  margin: 0.15rem 0;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.cover-title i {
+  font-style: normal;
+  color: var(--rose);
+  font-weight: 400;
+}
+
+.cover-date {
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  letter-spacing: 0.28em;
+  color: #76695d;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Thẻ cá nhân hoá người nhận thiệp */
+.cover-guest-badge {
+  margin-top: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 1.15rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(212, 168, 83, 0.65);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(41, 39, 35, 0.06);
+  animation: coverIntroFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.cover-guest-prefix {
+  font-size: 0.72rem;
+  color: #7f7467;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.cover-guest-name {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Vùng hiển thị phong bì hoàng gia có hiệu ứng 3D Parallax Tilt */
+.envelope-scene {
+  position: relative;
+  width: min(88vw, 410px);
+  height: clamp(210px, 48vw, 255px);
+  margin: 0.2rem auto;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: transform 0.35s ease-out;
+}
+
+/* Thân phong bì giấy mỹ thuật cao cấp dập nổi viền vàng */
 .envelope {
   position: relative;
   width: 100%;
-  height: min(52svh, 300px);
-  background: #fcf9f4;
+  height: 100%;
+  background: #fdfaf6;
   border-radius: 8px;
   box-shadow:
-    0 35px 80px rgba(41, 39, 35, 0.24),
-    0 12px 30px rgba(0, 0, 0, 0.08),
-    inset 0 0 45px rgba(220, 200, 180, 0.3);
-  perspective: 1200px;
+    0 25px 60px -12px rgba(45, 30, 25, 0.28),
+    0 10px 22px -4px rgba(0, 0, 0, 0.1),
+    inset 0 0 40px rgba(220, 205, 185, 0.35);
   transform-style: preserve-3d;
-  border: 1px solid rgba(212, 168, 83, 0.4);
+  border: 1px solid rgba(212, 168, 83, 0.45);
 }
 
 /* Lá thiệp mời sang trọng bên trong lòng phong bì */
 .envelope-card {
   position: absolute;
-  top: 5%;
-  left: 4%;
-  width: 92%;
-  height: 90%;
-  background: #fffdfa;
+  top: 4%;
+  left: 3%;
+  width: 94%;
+  height: 92%;
+  background: #fffdfb;
   border-radius: 4px;
-  padding: 1.25rem 1rem;
+  padding: 1.2rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   z-index: 2;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(212, 168, 83, 0.4);
   transition: transform 0.95s cubic-bezier(0.2, 0.85, 0.2, 1), box-shadow 0.95s ease;
-  border: 1px solid rgba(212, 168, 83, 0.35);
 }
 
 .envelope-card-border {
   position: absolute;
   inset: 5px;
-  border: 1px solid rgba(212, 168, 83, 0.5);
+  border: 1px solid rgba(212, 168, 83, 0.55);
   border-radius: 2px;
   pointer-events: none;
 }
 
-.envelope-card .eyebrow {
-  font-size: clamp(0.65rem, 1.1vw, 0.78rem);
-  letter-spacing: 0.25em;
-  margin-bottom: 0.2rem;
+.envelope-card-eyebrow {
+  font-size: clamp(0.62rem, 1.1vw, 0.72rem);
+  letter-spacing: 0.24em;
+  margin-bottom: 0.15rem;
   color: #8c8275;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .envelope-card picture {
   display: block;
-  width: min(24vw, 125px);
-  max-height: 65px;
+  width: min(22vw, 110px);
+  max-height: 55px;
   margin: 0.2rem auto;
 }
 
 .envelope-card picture img {
   display: block;
   width: 100%;
-  max-height: 65px;
+  max-height: 55px;
   object-fit: contain;
 }
 
-.envelope-card h1 {
-  font-size: clamp(2rem, 5.5vw, 3.2rem);
+.envelope-card-names {
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 5vw, 2.7rem);
   line-height: 1.05;
-  margin: 0.25rem 0;
+  margin: 0.2rem 0;
   white-space: nowrap;
+  font-weight: 500;
 }
 
-.envelope-card .envelope-date {
-  font-size: 0.85rem;
-  letter-spacing: 0.24em;
+.envelope-card-names i {
+  font-style: normal;
+  color: var(--rose);
+}
+
+.envelope-card-date {
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
   margin: 0.15rem 0 0;
   color: #6a645b;
 }
 
-/* Thân túi phong bì hình chữ V phía trước */
+/* Thân túi phong bì (Pocket) */
 .envelope-pocket {
   position: absolute;
   inset: 0;
-  background: linear-gradient(185deg, #fdfaf5 0%, #f6ece0 100%);
-  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
   z-index: 3;
-  border-radius: 0 0 8px 8px;
-  filter: drop-shadow(0 -3px 8px rgba(41, 39, 35, 0.06));
+  overflow: hidden;
+  border-radius: 8px;
+  pointer-events: none;
 }
 
-.envelope-pocket-gold-border {
+.envelope-pocket-bg {
   position: absolute;
   inset: 0;
-  clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 2px, 50% 52%, 0 2px);
-  background: linear-gradient(90deg, rgba(212, 168, 83, 0.2), #e5c175 50%, rgba(212, 168, 83, 0.2));
-  pointer-events: none;
+  background: #fbf7f0;
+  border-radius: 8px;
+}
+
+.envelope-pocket-crease-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 228, 215, 0.95) 100%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+}
+
+.envelope-pocket-crease-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  background: linear-gradient(-135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 228, 215, 0.95) 100%);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.03);
+}
+
+.envelope-pocket-front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(247, 237, 226, 0.95) 100%);
+  clip-path: polygon(0 42%, 50% 66%, 100% 42%, 100% 100%, 0 100%);
+  border-radius: 0 0 8px 8px;
+  filter: drop-shadow(0 -3px 8px rgba(41, 39, 35, 0.08));
 }
 
 /* Dải ruy băng lụa chạy ngang phong bì */
 .envelope-ribbon {
   position: absolute;
-  top: 52%;
+  top: 56%;
   left: -2px;
   right: -2px;
-  height: 38px;
+  height: 32px;
   transform: translateY(-50%);
-  background: linear-gradient(90deg, #c87670, #df958f 25%, #f2b7b2 50%, #df958f 75%, #c87670);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 1px solid rgba(255, 230, 180, 0.6);
-  border-bottom: 1px solid rgba(255, 230, 180, 0.6);
-}
-
-.envelope-ribbon-tag {
-  background: #fffdf9;
-  border: 1px solid #d4a853;
-  border-radius: 2px;
-  padding: 0.15rem 0.85rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  gap: 0.45rem;
-  align-items: center;
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  color: #7a2b27;
-  user-select: none;
-}
-
-.envelope-ribbon-tag b {
-  font-weight: 700;
-  color: var(--ink);
+  background: linear-gradient(90deg, #b96963 0%, #d98882 25%, #e9a39d 50%, #d98882 75%, #b96963 100%);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+  z-index: 4;
+  border-top: 1px solid rgba(255, 232, 175, 0.85);
+  border-bottom: 1px solid rgba(255, 232, 175, 0.85);
+  pointer-events: none;
 }
 
 /* Nắp phong bì tam giác gập xuống */
@@ -303,40 +416,35 @@ a {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(175deg, #fffcf8 0%, #f4e9db 100%);
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
-  z-index: 4;
+  right: 0;
+  height: 66%;
+  z-index: 5;
   transform-origin: top center;
   transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 6px 14px rgba(41, 39, 35, 0.12));
-  border-radius: 8px 8px 0 0;
+  filter: drop-shadow(0 6px 14px rgba(41, 39, 35, 0.16));
 }
 
-.envelope-flap-gold-edge {
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(0 0, 100% 0, 50% 58%, 50% 56%, 98% 0, 2% 0);
-  background: linear-gradient(135deg, #d4a853, #fff2be 50%, #bf933d);
-  pointer-events: none;
+.envelope-flap-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-/* Nắp phía sau khi mở ra kèm hoa văn lót quý phái */
+/* Nắp phía sau khi mở ngược lên kèm hoa văn lót quý phái */
 .envelope-flap-top {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: #ecdccf;
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  right: 0;
+  height: 66%;
   transform-origin: top center;
   transform: rotateX(180deg);
   opacity: 0;
   z-index: 1;
   transition: opacity 0.85s ease;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
   overflow: hidden;
+  background: #ecdccf;
 }
 
 .envelope-liner {
@@ -353,7 +461,7 @@ a {
    ========================================== */
 .wax-seal {
   position: absolute;
-  top: 58%;
+  top: 56%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -361,22 +469,25 @@ a {
   border: 0;
   padding: 0;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   outline: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
 .wax-seal-wrapper {
   position: relative;
-  width: 86px;
-  height: 86px;
+  width: 82px;
+  height: 82px;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 10px 25px rgba(115, 20, 18, 0.45));
+  filter: drop-shadow(0 8px 22px rgba(100, 20, 18, 0.45));
+  animation: waxBreathe 3s ease-in-out infinite;
   transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes waxBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
 }
 
 .wax-seal:hover .wax-seal-wrapper,
@@ -413,38 +524,51 @@ a {
   100% { transform: translateX(100%) rotate(25deg); opacity: 0; }
 }
 
-/* Lời mời chạm mở thiệp mạ vàng thanh lịch */
-.wax-hint-wrap {
+/* Lời mời chạm mở thiệp dạng pill hoàng gia */
+.cover-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.9rem;
-  color: #a8792c;
-  font-family: var(--serif);
-  font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+  gap: 0.55rem;
+  padding: 0.65rem 1.6rem;
+  background: #fffdfa;
+  border: 1px solid rgba(212, 168, 83, 0.75);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: clamp(0.72rem, 1.8vw, 0.82rem);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 0 10px rgba(247, 213, 155, 0.4);
-  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(212, 168, 83, 0.25);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  animation: ctaFloat 2.4s ease-in-out infinite;
   user-select: none;
-  animation: hintBreathe 2.4s ease-in-out infinite;
 }
 
-.wax-hint-star {
-  font-size: 0.75rem;
+.cover-cta:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 168, 83, 0.38);
+}
+
+.cover-cta:active {
+  transform: scale(0.97);
+}
+
+.cover-cta-sparkle {
   color: #d4a853;
+  font-size: 0.75rem;
   animation: starTwinkle 1.8s ease-in-out infinite alternate;
 }
 
-@keyframes hintBreathe {
-  0%, 100% { opacity: 0.85; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(-2px); }
+@keyframes ctaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 
 @keyframes starTwinkle {
-  0% { opacity: 0.4; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1.2); }
+  0% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); }
 }
 
 /* ==========================================
@@ -461,20 +585,20 @@ a {
 
 .envelope-scene.is-open .wax-seal {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(1.25);
+  transform: translate(-50%, -50%) scale(1.3);
   pointer-events: none;
 }
 
 .envelope-scene.is-open .envelope-ribbon {
   opacity: 0;
-  transform: translateY(-50%) scaleY(0.5);
+  transform: translateY(-50%) scaleY(0.4);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .envelope-scene.is-open .envelope-card {
-  transform: translateY(-55%) scale(1.05);
-  z-index: 5;
-  box-shadow: 0 25px 60px rgba(41, 39, 35, 0.28), 0 0 35px rgba(247, 213, 155, 0.4);
+  transform: translateY(-58%) scale(1.04);
+  z-index: 6;
+  box-shadow: 0 25px 60px rgba(41, 39, 35, 0.3), 0 0 35px rgba(247, 213, 155, 0.45);
 }
 
 

@@ -158,33 +158,48 @@ if (envelopeScene && coverElem && !window.matchMedia('(prefers-reduced-motion: r
   });
 }
 
-if (openBtn && coverElem) {
-  openBtn.onclick = () => {
-    if (navigator.vibrate) {
-      try { navigator.vibrate([20, 40, 20]); } catch (e) {}
-    }
+function openEnvelopeInvitation() {
+  if (!coverElem || coverElem.classList.contains('is-opening') || coverElem.classList.contains('open')) return;
+  coverElem.classList.add('is-opening');
 
-    // 1. Kích hoạt bùng nổ pháo hoa cánh hoa & bụi vàng
-    triggerOpeningBurst(openBtn);
+  if (navigator.vibrate) {
+    try { navigator.vibrate([25, 45, 25]); } catch (e) {}
+  }
 
-    // 2. Mở nắp phong bì và nhô lá thiệp mời lên
-    if (envelopeScene) {
-      envelopeScene.style.transform = 'none';
-      envelopeScene.classList.add('is-open');
-    }
+  // 1. Kích hoạt bùng nổ pháo hoa cánh hoa & bụi vàng
+  const burstOrigin = openBtn || envelopeScene || coverElem;
+  triggerOpeningBurst(burstOrigin);
 
-    // 3. Bắt đầu phát nhạc nền
-    startBackgroundMusic();
+  // 2. Mở nắp phong bì và nhô lá thiệp mời lên
+  if (envelopeScene) {
+    envelopeScene.style.transform = 'none';
+    envelopeScene.classList.add('is-open');
+  }
 
-    // 4. Sau 1.35s cho khách thưởng thức khoảnh khắc mở thư, chuyển vào trang web chính
+  // 3. Bắt đầu phát nhạc nền
+  startBackgroundMusic();
+
+  // 4. Sau 1.35s cho khách thưởng thức khoảnh khắc mở thư, chuyển vào trang web chính
+  setTimeout(() => {
+    coverElem.classList.add('open');
+    document.body.classList.remove('locked');
+
     setTimeout(() => {
-      coverElem.classList.add('open');
-      document.body.classList.remove('locked');
+      coverElem.remove();
+    }, 900);
+  }, 1350);
+}
 
-      setTimeout(() => {
-        coverElem.remove();
-      }, 900);
-    }, 1350);
+if (openBtn) openBtn.onclick = openEnvelopeInvitation;
+if (envelopeScene) envelopeScene.onclick = openEnvelopeInvitation;
+const coverCta = $('#coverCta');
+if (coverCta) {
+  coverCta.onclick = openEnvelopeInvitation;
+  coverCta.onkeydown = e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openEnvelopeInvitation();
+    }
   };
 }
 
