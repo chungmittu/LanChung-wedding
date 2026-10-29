@@ -160,16 +160,16 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 2.6vh, 1.8rem);
+  gap: clamp(0.8rem, 2.2vh, 1.4rem);
   text-align: center;
   z-index: 5;
 }
 
 .cover-logo {
   display: block;
-  width: clamp(76px, 22vw, 104px);
+  width: clamp(68px, 18vw, 112px);
   flex: 0 0 auto;
-  margin-bottom: -0.5rem;
+  margin-bottom: -0.35rem;
 }
 
 .cover-logo img {
@@ -2218,7 +2218,7 @@ footer {
   /* Phong bì trên tablet/mobile */
   .envelope-scene {
     width: min(94vw, 420px);
-    height: min(70svh, 440px);
+    height: min(50svh, 270px);
   }
   .envelope {
     height: min(50svh, 270px);
@@ -2298,7 +2298,7 @@ footer {
 
   .envelope-scene {
     width: calc(100vw - 2rem);
-    height: 380px;
+    height: 250px;
   }
   .envelope {
     height: 250px;
