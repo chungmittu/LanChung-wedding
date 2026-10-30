@@ -453,6 +453,7 @@ const gallerySlides = $$('.photo');
 const galleryReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let galleryAutoSlideTimeout = null;
 let galleryScrollTimeout = null;
+let galleryPresentationFrame = null;
 
 function getGalleryActiveIndex() {
   if (!galleryTrack || photos.length === 0) return 0;
@@ -463,6 +464,21 @@ function getGalleryActiveIndex() {
     const closestDistance = Math.abs(closestSlide.getBoundingClientRect().left + closestSlide.offsetWidth / 2 - trackCenter);
     return currentDistance < closestDistance ? index : closestIndex;
   }, 0);
+}
+
+function updateGalleryPresentation() {
+  if (!galleryTrack || gallerySlides.length === 0 || galleryReducedMotion.matches) return;
+  const trackCenter = galleryTrack.scrollLeft + galleryTrack.clientWidth / 2;
+
+  gallerySlides.forEach(slide => {
+    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+    const offset = (slideCenter - trackCenter) / Math.max(slide.offsetWidth, galleryTrack.clientWidth * 0.42);
+    const distance = Math.min(Math.abs(offset), 1.25);
+    slide.style.setProperty('--gallery-rotate', `${(-offset * 18).toFixed(2)}deg`);
+    slide.style.setProperty('--gallery-scale', (1 - distance * 0.075).toFixed(3));
+    slide.style.setProperty('--gallery-z', `${(-distance * 34).toFixed(1)}px`);
+    slide.style.setProperty('--gallery-opacity', (1 - distance * 0.16).toFixed(3));
+  });
 }
 
 function updateGalleryCounter() {
@@ -484,6 +500,7 @@ function goToGallerySlide(index) {
     left,
     behavior: galleryReducedMotion.matches ? 'auto' : 'smooth'
   });
+  updateGalleryPresentation();
   updateGalleryCounter();
 }
 
@@ -525,6 +542,12 @@ if (gallerySlider && galleryTrack) {
 
   galleryTrack.addEventListener('scroll', () => {
     stopGalleryAutoplay();
+    if (galleryPresentationFrame === null) {
+      galleryPresentationFrame = requestAnimationFrame(() => {
+        updateGalleryPresentation();
+        galleryPresentationFrame = null;
+      });
+    }
     clearTimeout(galleryScrollTimeout);
     galleryScrollTimeout = setTimeout(() => {
       updateGalleryCounter();
@@ -540,10 +563,17 @@ if (gallerySlider && galleryTrack) {
   });
   gallerySlider.addEventListener('pointerdown', stopGalleryAutoplay);
   gallerySlider.addEventListener('pointerup', scheduleGalleryAutoplay);
-  galleryReducedMotion.addEventListener('change', scheduleGalleryAutoplay);
+  galleryReducedMotion.addEventListener('change', () => {
+    updateGalleryPresentation();
+    scheduleGalleryAutoplay();
+  });
   document.addEventListener('visibilitychange', scheduleGalleryAutoplay);
-  window.addEventListener('resize', updateGalleryCounter);
+  window.addEventListener('resize', () => {
+    updateGalleryPresentation();
+    updateGalleryCounter();
+  });
 
+  updateGalleryPresentation();
   updateGalleryCounter();
   scheduleGalleryAutoplay();
 }
