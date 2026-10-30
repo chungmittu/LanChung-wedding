@@ -294,28 +294,54 @@ if ($('#cal')) {
 
 // Dữ liệu tạo file lịch cá nhân (.ics)
 const calendarEvents = {
-  bride: [
-    'Tiệc nhà gái - Lan & Chung',
-    '20261212T033000Z',
-    '20261212T053000Z',
-    'SeaBay Hạ Long, X232+7MW, Bãi Cháy, Quảng Ninh'
-  ],
-  groom: [
-    'Tiệc nhà trai - Lan & Chung',
-    '20261212T100000Z',
-    '20261212T120000Z',
-    'Số 8, ngõ 3, đường Văn Hoá, Khối 8, Sóc Sơn, Hà Nội'
-  ]
+  bride: {
+    title: 'Tiệc nhà gái - Lan & Chung',
+    startUtc: '20261212T033000Z',
+    endUtc: '20261212T053000Z',
+    startLocal: '20261212T103000',
+    endLocal: '20261212T123000',
+    location: 'SeaBay Hạ Long, X232+7MW, Bãi Cháy, Quảng Ninh'
+  },
+  groom: {
+    title: 'Tiệc nhà trai - Lan & Chung',
+    startUtc: '20261212T100000Z',
+    endUtc: '20261212T120000Z',
+    startLocal: '20261212T170000',
+    endLocal: '20261212T190000',
+    location: 'Số 8, ngõ 3, đường Văn Hoá, Khối 8, Sóc Sơn, Hà Nội'
+  }
 };
 
 $$('[data-ics]').forEach(button => {
   button.onclick = () => {
     const ev = calendarEvents[button.dataset.ics];
     if (!ev) return;
+
+    if (
+      window.matchMedia('(max-width: 768px), (pointer: coarse)').matches ||
+      /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+    ) {
+      const calendarUrl = new URL('https://calendar.google.com/calendar/render');
+      calendarUrl.search = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: ev.title,
+        dates: `${ev.startLocal}/${ev.endLocal}`,
+        ctz: 'Asia/Ho_Chi_Minh',
+        location: ev.location
+      }).toString();
+      const calendarWindow = window.open(calendarUrl.toString(), '_blank');
+      if (calendarWindow) {
+        calendarWindow.opener = null;
+      } else {
+        window.location.assign(calendarUrl.toString());
+      }
+      return;
+    }
+
     const blobContent =
       `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\n` +
-      `DTSTART:${ev[1]}\r\nDTEND:${ev[2]}\r\nSUMMARY:${ev[0]}\r\n` +
-      `LOCATION:${ev[3]}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+      `DTSTART:${ev.startUtc}\r\nDTEND:${ev.endUtc}\r\nSUMMARY:${ev.title}\r\n` +
+      `LOCATION:${ev.location}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
 
     const blob = new Blob([blobContent], { type: 'text/calendar;charset=utf-8' });
     const downloadLink = document.createElement('a');
