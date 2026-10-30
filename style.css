@@ -706,6 +706,15 @@ header {
   border-bottom: 1px solid var(--line);
 }
 
+.site-header {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
 .brand img {
   display: block;
   width: 78px;

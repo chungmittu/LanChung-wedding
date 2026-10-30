@@ -222,6 +222,29 @@ $$('nav a').forEach(link => {
   };
 });
 
+const siteHeader = $('.site-header');
+let previousScrollY = window.scrollY;
+let headerScrollFrame = null;
+
+window.addEventListener('scroll', () => {
+  if (!siteHeader || headerScrollFrame !== null) return;
+  headerScrollFrame = requestAnimationFrame(() => {
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - previousScrollY;
+
+    if (currentScrollY <= siteHeader.offsetHeight || $('#nav')?.classList.contains('open')) {
+      siteHeader.classList.remove('is-hidden');
+    } else if (scrollDelta > 8) {
+      siteHeader.classList.add('is-hidden');
+    } else if (scrollDelta < -8) {
+      siteHeader.classList.remove('is-hidden');
+    }
+
+    previousScrollY = currentScrollY;
+    headerScrollFrame = null;
+  });
+}, { passive: true });
+
 // Hiệu ứng cuộn trang hiện dần (Scroll Reveal)
 const observer = new IntersectionObserver(
   entries => {
