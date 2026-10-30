@@ -181,7 +181,8 @@ function openEnvelopeInvitation() {
   startBackgroundMusic();
 
   // 4. Chờ nắp mở xong rồi chuyển nhẹ sang nội dung chính
-  const openingDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 900;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const openingDelay = (reducedMotion ? 0 : 900) + 1000;
   setTimeout(() => {
     coverElem.classList.add('open');
     document.body.classList.remove('locked');

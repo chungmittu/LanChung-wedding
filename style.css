@@ -240,14 +240,23 @@ a {
 
 /* Thẻ cá nhân hoá người nhận thiệp */
 .cover-guest-badge {
-  margin-top: 0.4rem;
-  max-width: min(100%, 380px);
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  z-index: 1;
+  width: min(90%, 380px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0;
-  animation: coverIntroFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  text-shadow: 0 1px 5px rgba(255, 253, 249, 0.8);
+}
+
+.cover-guest-badge[hidden] {
+  display: none !important;
 }
 
 .cover-guest-prefix {
@@ -259,7 +268,7 @@ a {
 
 .cover-guest-name {
   font-family: 'Fairwater Script', 'Great Vibes', cursive;
-  font-size: clamp(1.8rem, 6vw, 2.3rem);
+  font-size: clamp(1.55rem, 5.2vw, 2rem);
   color: var(--ink);
   font-weight: 400;
   line-height: 1.1;
@@ -444,6 +453,7 @@ a {
   right: 0;
   height: 66%;
   z-index: 5;
+  transform-style: preserve-3d;
   transform-origin: top center;
   transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
   filter: drop-shadow(0 6px 14px rgba(41, 39, 35, 0.16));
