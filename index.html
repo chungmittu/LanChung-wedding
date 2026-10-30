@@ -108,10 +108,11 @@
               <polygon points="0,0 400,0 200,210" stroke="rgba(212, 168, 83, 0.45)" stroke-width="1.5" fill="none" />
               <polyline points="18,5 200,196 382,5" stroke="rgba(212, 168, 83, 0.35)" stroke-dasharray="3 3" stroke-width="1" fill="none" />
             </svg>
-            <div class="cover-guest-badge" id="guestCardBadge" hidden>
-              <span class="cover-guest-prefix">Thân mời</span>
-              <strong class="cover-guest-name" id="guestCoverName"></strong>
-            </div>
+          </div>
+
+          <div class="cover-guest-badge" id="guestCardBadge" hidden>
+            <span class="cover-guest-prefix">Thân mời</span>
+            <strong class="cover-guest-name" id="guestCoverName"></strong>
           </div>
 
           <!-- Con dấu sáp hoàng gia với logo Liu Chiu -->
@@ -172,7 +173,7 @@
   </div>
 
   <!-- Thanh điều hướng Header -->
-  <header>
+  <header class="site-header">
     <a class="brand" href="#hero">
       <picture>
         <source media="(min-width: 1024px)" srcset="assets/images/logo_liu_chiu_desktop.webp"/>
@@ -340,10 +341,21 @@
             <strong>Trung tâm tiệc cưới SeaBay Hạ Long</strong><br/>
             X232+7MW, Bãi Cháy, Quảng Ninh.
           </address>
-          <div class="links">
-            <a href="https://www.google.com/maps/search/?api=1&query=X232%2B7MW%2C+B%C3%A3i+Ch%C3%A1y%2C+Qu%E1%BA%A3ng+Ninh" rel="noopener noreferrer" target="_blank">Bản đồ ↗</a>
-            <button data-copy="X232+7MW, Bãi Cháy, Quảng Ninh">Sao chép</button>
-            <button data-select="Tiệc nhà gái">RSVP</button>
+          <div class="event-location">
+            <div class="links">
+              <a href="https://www.google.com/maps/search/?api=1&query=X232%2B7MW%2C+B%C3%A3i+Ch%C3%A1y%2C+Qu%E1%BA%A3ng+Ninh" rel="noopener noreferrer" target="_blank">Mở bản đồ ↗</a>
+              <button data-copy="X232+7MW, Bãi Cháy, Quảng Ninh">Sao chép</button>
+              <button data-select="Tiệc nhà gái">RSVP</button>
+            </div>
+            <div class="event-map">
+              <iframe
+                title="Bản đồ tiệc nhà gái tại SeaBay Hạ Long"
+                src="https://maps.google.com/maps?q=X232%2B7MW%2C%20B%C3%A3i%20Ch%C3%A1y%2C%20Qu%E1%BA%A3ng%20Ninh&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </article>
         <article class="event rose reveal">
@@ -359,10 +371,21 @@
             Số 8, ngõ 3, đường Văn Hoá, Khối 8 (Xóm Đồng)<br/>
             Sóc Sơn, Hà Nội.
           </address>
-          <div class="links">
-            <a href="https://www.google.com/maps/search/?api=1&query=21.195472%2C105.849139" rel="noopener noreferrer" target="_blank">Bản đồ ↗</a>
-            <button data-copy="Số 8, ngõ 3, đường Văn Hoá, Khối 8 (Xóm Đồng), Sóc Sơn, Hà Nội">Sao chép</button>
-            <button data-select="Tiệc nhà trai">RSVP</button>
+          <div class="event-location">
+            <div class="links">
+              <a href="https://www.google.com/maps/search/?api=1&query=21.195472%2C105.849139" rel="noopener noreferrer" target="_blank">Mở bản đồ ↗</a>
+              <button data-copy="Số 8, ngõ 3, đường Văn Hoá, Khối 8 (Xóm Đồng), Sóc Sơn, Hà Nội">Sao chép</button>
+              <button data-select="Tiệc nhà trai">RSVP</button>
+            </div>
+            <div class="event-map">
+              <iframe
+                title="Bản đồ tiệc nhà trai tại Sóc Sơn, Hà Nội"
+                src="https://maps.google.com/maps?q=21.195472%2C105.849139&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </article>
       </div>

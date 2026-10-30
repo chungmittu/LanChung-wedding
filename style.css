@@ -248,9 +248,9 @@ a {
 /* Thẻ cá nhân hoá người nhận thiệp */
 .cover-guest-badge {
   position: absolute;
-  top: 34%;
+  top: 84%;
   left: 50%;
-  z-index: 1;
+  z-index: 11;
   width: min(90%, 380px);
   display: flex;
   flex-direction: column;
@@ -260,6 +260,13 @@ a {
   transform: translate(-50%, -50%);
   pointer-events: none;
   text-shadow: 0 1px 5px rgba(255, 253, 249, 0.8);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.cover.is-opening .cover-guest-badge,
+.cover-guest-badge[hidden] {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .cover-guest-badge[hidden] {
@@ -697,6 +704,15 @@ header {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+}
+
+.site-header {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.site-header.is-hidden {
+  transform: translateY(-100%);
 }
 
 .brand img {
@@ -1138,6 +1154,39 @@ nav a:hover {
 
 .event-date b {
   font: 3rem var(--serif);
+}
+
+.event-location {
+  display: grid;
+  grid-template-columns: minmax(76px, 0.28fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.event-location .links {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0;
+}
+
+.event-map {
+  position: relative;
+  min-width: 0;
+  min-height: 210px;
+  overflow: hidden;
+  border: 1px solid rgba(190, 145, 57, 0.65);
+  background: #f3ece4;
+}
+
+.event-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  border: 0;
 }
 
 address {
@@ -2426,7 +2475,12 @@ footer {
   .event h3 { font-size: 3.5rem; }
   .event-date { gap: 1rem; }
   .event-date b { font-size: 2.5rem; }
-  .links { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .event-location {
+    grid-template-columns: minmax(64px, 0.25fr) minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+  .event-map,
+  .event-map iframe { min-height: 190px; }
 
   .gift-grid { grid-template-columns: 1fr; }
   .family > h2 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
