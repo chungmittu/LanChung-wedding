@@ -182,7 +182,7 @@ function openEnvelopeInvitation() {
 
   // 4. Chờ nắp mở xong rồi chuyển nhẹ sang nội dung chính
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const openingDelay = (reducedMotion ? 0 : 900) + 1000;
+  const openingDelay = (reducedMotion ? 0 : 900) + 500;
   setTimeout(() => {
     coverElem.classList.add('open');
     document.body.classList.remove('locked');
