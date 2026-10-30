@@ -248,9 +248,9 @@ a {
 /* Thẻ cá nhân hoá người nhận thiệp */
 .cover-guest-badge {
   position: absolute;
-  top: 34%;
+  top: 84%;
   left: 50%;
-  z-index: 1;
+  z-index: 11;
   width: min(90%, 380px);
   display: flex;
   flex-direction: column;
@@ -260,6 +260,13 @@ a {
   transform: translate(-50%, -50%);
   pointer-events: none;
   text-shadow: 0 1px 5px rgba(255, 253, 249, 0.8);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.cover.is-opening .cover-guest-badge,
+.cover-guest-badge[hidden] {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .cover-guest-badge[hidden] {
