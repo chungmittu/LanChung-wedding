@@ -262,11 +262,13 @@ a {
   left: 50%;
   z-index: 11;
   width: min(90%, 380px);
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  gap: 0;
+  column-gap: 0.4rem;
+  row-gap: 0.1rem;
   transform: translate(-50%, -50%);
   pointer-events: none;
   text-shadow: 0 1px 5px rgba(255, 253, 249, 0.8);
@@ -284,18 +286,20 @@ a {
 }
 
 .cover-guest-prefix {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: #7f7467;
   letter-spacing: 0.06em;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .cover-guest-name {
   font-family: 'Fairwater Script', 'Great Vibes', cursive;
-  font-size: clamp(1.55rem, 5.2vw, 2rem);
+  font-size: clamp(1.35rem, 4.8vw, 1.8rem);
   color: var(--ink);
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 /* Vùng hiển thị phong bì hoàng gia có hiệu ứng 3D Parallax Tilt */
